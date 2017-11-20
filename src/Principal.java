@@ -136,8 +136,7 @@ public class Principal {
     public static void mostrarCaminho(int[] S) {
         //Quantidade de vértices da lista
         int n = S.length;        
-        //Percorre os vértices apartir de pi
-        //O laço começa em 1 pois na posição 0 temos -1 do início        
+        //Percorre os vértices apartir de S        
         System.out.println("Caminho mínimo :");
         for (int v = 0; v < n; v++) {
             System.out.println(trocar(pi[S[v]]) + " para " + trocar(S[v]) + " custo:" + d[S[v]]);            
