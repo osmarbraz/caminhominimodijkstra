@@ -35,8 +35,8 @@ public class Principal {
      * @return Uma String com a letra da posição i
      */
     public static String trocar(int i) {
-        //String letras = "stxyz";
-        String letras = "srwtuv";
+        String letras = "stxyz";
+        //String letras = "srwtuv";
         return letras.charAt(i) + "";
     }
 
@@ -47,7 +47,7 @@ public class Principal {
      * @return Um inteiro com a posição da letra no grafo
      */
     public static int destrocar(char v) {
-        String letras = "srwtuv";
+        String letras = "stxyz";
         int pos = -1;
         for (int i = 0; i < letras.length(); i++) {
             if (letras.charAt(i) == v) {
@@ -111,8 +111,7 @@ public class Principal {
             cor[v] = BRANCO;            
         }
         d[s] = 0;
-        pi[s] = 0;       
-        //cor[s] = CINZA;
+        pi[s] = 0;               
     }
 
     /**
@@ -122,8 +121,7 @@ public class Principal {
      * @param v Vértice de destino
      * @param w Peso do caminho u até v.
      */
-    private static void relaxamento(int u, int v, int w) {
-        //if (!h[v] || d[v] > d[u] + w) {
+    private static void relaxamento(int u, int v, int w) {        
         if (d[v] > d[u] + w) {
             d[v] = d[u] + w;
             pi[v] = u;
@@ -137,17 +135,13 @@ public class Principal {
      */
     public static void mostrarCaminho(int[] S) {
         //Quantidade de vértices da lista
-        int n = S.length;
-        //Guarda o custo do caminho
-        int custo = 0;
+        int n = S.length;        
         //Percorre os vértices apartir de pi
         //O laço começa em 1 pois na posição 0 temos -1 do início        
-        System.out.println("\n Caminho mínimo :");
-        for (int v = 1; v < n; v++) {
-            System.out.println(trocar(pi[S[v]]) + " para " + trocar(S[v]) + " custo:" + d[S[v]] );
-            custo = custo + d[S[v]];            
-        }
-        System.out.println("Custo Total:" + custo);
+        System.out.println("Caminho mínimo :");
+        for (int v = 0; v < n; v++) {
+            System.out.println(trocar(pi[S[v]]) + " para " + trocar(S[v]) + " custo:" + d[S[v]]);            
+        }        
     }
     
     /**
@@ -203,25 +197,25 @@ public class Principal {
 
     public static void main(String args[]) {
 
-        //Grafo Slide 143 de 20/10/2017
-        int G[][] =
-               //s  r  w  t  u  v 
-               {{0,10, 0, 0, 5, 0}, //s
-                {0, 0, 1, 0, 2, 0}, //r
-                {0, 0, 0, 3, 0, 4}, //w                
-                {0, 0, 0, 0, 0, 0}, //t
-                {0, 3, 9, 0, 0, 2}, //u
-                {7, 0, 6, 5, 0, 0}}; //v
+//        //Grafo Slide 143 de 20/10/2017
+//        int G[][] =
+//               //s  r  w  t  u  v 
+//               {{0,10, 0, 0, 5, 0}, //s
+//                {0, 0, 1, 0, 2, 0}, //r
+//                {0, 0, 0, 3, 0, 4}, //w                
+//                {0, 0, 0, 0, 0, 0}, //t
+//                {0, 3, 9, 0, 0, 2}, //u
+//                {7, 0, 6, 5, 0, 0}}; //v
                
         
         //Grafo da página xx Thomas H. Cormen 3 ed
-//        int G[][]
-//             = //s   t  x  y  z    
-//               {{0, 10, 0, 5, 0}, //s
-//                {0,  0, 1, 2, 0}, //t
-//                {0,  0, 0, 0, 2}, //x
-//                {0,  3, 9, 0, 2}, //y
-//                {7,  0, 6, 0, 0}};//z
+        int G[][]
+             = //s   t  x  y  z    
+               {{0, 10, 0, 5, 0}, //s
+                {0,  0, 1, 2, 0}, //t
+                {0,  0, 0, 0, 2}, //x
+                {0,  3, 9, 0, 2}, //y
+                {7,  0, 6, 0, 0}};//z
 
         System.out.println("Caminho mínimos de fonte única, Algoritmo de Dijkstra");
 
