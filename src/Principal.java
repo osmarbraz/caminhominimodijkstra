@@ -139,7 +139,7 @@ public class Principal {
         //Percorre os vértices apartir de S        
         System.out.println("Caminho mínimo :");
         for (int v = 0; v < n; v++) {
-            System.out.println(trocar(pi[S[v]]) + " para " + trocar(S[v]) + " custo:" + d[S[v]]);            
+            System.out.println(trocar(pi[S[v]]) + " -> " + trocar(S[v]) + " custo: " + d[S[v]]);            
         }        
     }
     
