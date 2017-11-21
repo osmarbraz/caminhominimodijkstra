@@ -201,8 +201,9 @@ public class Principal {
 
     public static void main(String args[]) {
 
-//        //Grafo Slide 143 de 20/10/2017
-//        int G[][] =
+//       //Grafo Slide 143 de 20/10/2017
+         //descomente a linha 39 para usar este grafo
+//       int G[][] =
 //               //s  r  w  t  u  v 
 //               {{0,10, 0, 0, 5, 0}, //s
 //                {0, 0, 1, 0, 2, 0}, //r
@@ -213,6 +214,7 @@ public class Principal {
                
         
         //Grafo da página xx Thomas H. Cormen 3 ed
+        //descomente a linha 38 para usar este grafo
         int G[][]
              = //s   t  x  y  z    
                {{0, 10, 0, 5, 0}, //s
