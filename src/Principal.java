@@ -37,7 +37,11 @@ public class Principal {
     public static String trocar(int i) {
         String letras = "stxyz";
         //String letras = "srwtuv";
-        return letras.charAt(i) + "";
+        if ((i >=0) && (i<=letras.length())) {
+            return letras.charAt(i) + "";
+        } else {
+            return "-";
+        }        
     }
 
     /**
@@ -142,9 +146,9 @@ public class Principal {
     public static void mostrarCaminho(int[] S) {
         //Quantidade de vértices da lista
         int n = S.length;        
-        //Percorre os vértices apartir de S        
+        //Percorre os vértices a partir de S        
         System.out.println("Caminho mínimo :");
-        for (int v = 0; v < n; v++) {
+        for (int v = 1; v < n; v++) {
             System.out.println(trocar(pi[S[v]]) + " -> " + trocar(S[v]) + " custo: " + d[S[v]]);            
         }        
     }
@@ -224,7 +228,11 @@ public class Principal {
         int[] S = algoritmoDijkstra(G, s);
 
         //Mostra o menor caminho
-        mostrarCaminho(S);
+        mostrarCaminho(S);  
         
+        System.out.println("\nMostrando todos dados:");
+        for (int i = 0; i < G.length; i++) {
+            System.out.println(trocar(pi[i]) + " -> " +  trocar(i) + " custo: " + d[i]);
+        }
     }
 }
