@@ -5,6 +5,8 @@
  * Disciplinas: Projeto e Análise de Algoritmos
  * Prof Alexandre Gonçalves da Silva 
  *
+ * Baseado nos slides 63 da aula do dia 27/10/2017 
+ *
  * Página 474 Thomas H. Cormen 3a Ed 
  *
  * Caminho mínimos de fonte única, Algoritmo de Dijkstra
