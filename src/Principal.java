@@ -186,14 +186,15 @@ public class Principal {
             int x = extrairMenor(V);
             //Marca como visitado
             cor[x] = CINZA;
-            S[i]=x;            
+            S[i]=x;                        
             //Percorre todas as arestas do grafo
             for (int j = 0; j < E; j++) {
                 int[] vertice = (int[]) arestas.get(j);
                 int u = vertice[0];
                 int v = vertice[1];
                 int w = vertice[2];
-                if (u == x) {
+                //Faz p relaxamento para o vertice retirado de V
+                if (u == x) {                
                     relaxamento(u, v, w);
                 }
             }
