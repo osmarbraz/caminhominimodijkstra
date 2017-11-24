@@ -158,7 +158,9 @@ public class Principal {
     /**
      * Executa o algoritmo de Dijkstra para Caminhos Mínimos de fonte única.
      *
-     * Encontra a distância mais curta de s para todos os outros vértices.     
+     * Encontra a distância mais curta de s para todos os outros vértices.   
+     * 
+     * Complexidade: O(V log V + E)
      *
      * @param G Matriz de indicência da árvore
      * @return Vetor com a lista das arestas de menor custo
