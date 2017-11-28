@@ -12,8 +12,8 @@
  * Caminho mínimos de fonte única, Algoritmo de Dijkstra
  *
  * O algoritmo de Dijkstra recebe um grafo orientado ponderado(G,w) (sem 
- * arestas de peso negativo) e um vértice s de G
- *
+ * arestas de peso negativo) e um vértice s de G. Menor caminho de um vértice,
+ * para todos os outros vértices.
  */
 
 /**
