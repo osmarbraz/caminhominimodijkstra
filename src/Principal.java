@@ -232,7 +232,7 @@ public class Principal {
                 {0,  3, 9, 0, 2}, //y
                 {7,  0, 6, 0, 0}};//z
 
-        System.out.println("Caminho mínimos de fonte única, Algoritmo de Dijkstra");
+        System.out.println(">>> Caminho mínimos de fonte única, Algoritmo de Dijkstra <<<");
 
         //Executa o algoritmo
         int s = destrocar('s');
