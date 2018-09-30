@@ -166,7 +166,8 @@ public class Principal {
      * 
      * Complexidade: O(V log V + E)
      *
-     * @param G Matriz de indicência da árvore
+     * @param G Matriz de adjacência da árvore
+     * @param s Vértice de início
      * @return Vetor com a lista das arestas de menor custo
      */
     public static int[] algoritmoDijkstra(int[][] G, int s) {
