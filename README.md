@@ -10,4 +10,4 @@ Página 479 Thomas H. Cormen 3a Ed <br>
 <br>
 Caminho mínimos de fonte única, Algoritmo de Dijkstra<br>
 Aplicacões:<br>
-- Encontra o caminho mínimo em um grafo valorado onde as areas não tem peso negativo.<br>
+- Encontra o caminho mínimo em um grafo valorado onde as arestas não tem peso negativo.<br>
