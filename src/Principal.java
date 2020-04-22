@@ -6,8 +6,7 @@
  * Prof Alexandre Gonçalves da Silva 
  *
  * Baseado nos slides 63 da aula do dia 27/10/2017 
- *
- * Página 479 Thomas H. Cormen 3a Ed 
+ * Baseado no algoritmo página 479 Thomas H. Cormen 3a Ed 
  *
  * Caminho mínimos de fonte única, Algoritmo de Dijkstra
  *
@@ -19,14 +18,13 @@
 /**
  * @author Osmar de Oliveira Braz Junior
  */
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 public class Principal {
 
-    final static int BRANCO = 0;//Vértice não visitado. Inicialmente todos os vértices são brancos
-    final static int CINZA = 1; //Vértice visitado 
-    
     //Vetor dos pais de um vértice
     static int[] pi;
     //Vetor das distâncias
@@ -43,11 +41,11 @@ public class Principal {
     public static String trocar(int i) {
         String letras = "stxyz";
         //String letras = "srwtuv";
-        if ((i >=0) && (i<=letras.length())) {
+        if ((i >= 0) && (i <= letras.length())) {
             return letras.charAt(i) + "";
         } else {
             return "-";
-        }        
+        }
     }
 
     /**
@@ -66,47 +64,84 @@ public class Principal {
         }
         return pos;
     }
-
+   
     /**
-     * Gera um vetor de arestas e pesos.
+     * Gera uma lista dos vértices.
      *
      * @param G Matriz de adjacência do grafo
-     * @return Um vetor de arestas e pesos.
+     * @return Um vetor dos vértices.
      */
-    public static List getMatrizVertices(int[][] G) {
+    public static List getVertices(int[][] G) {
+        int n = G.length;
+        List vertices = new LinkedList();
+        for (int i = 0; i < n; i++) {            
+           //Cria uma lista com os vértices
+           vertices.add(i);            
+        }
+        return vertices;
+    }
+      
+    /**
+     * Retorna o vértice com o menor peso da aresta.
+     *
+     * Complexidade O(V log V)
+     *
+     * @param Q Lista dos vértices a ser pesquisados
+     * @return O menor vértice
+     */
+    public static int extrairMenor(List Q) {
+        //Usa o maior valor de inteiro como menor
+        int menorValor = Integer.MAX_VALUE;        
+        int indiceMenor = -1;        
+        int apagar = -1;
+        for (int i = 0; i < Q.size(); i++) {
+            //Recupera o vértice da lista
+            int v = (int) Q.get(i);
+            
+            //Verifica se é menor
+            if (d[v] < menorValor) {
+                //Guarda o menor valor
+                menorValor = d[v];
+                //Guarda o vértice
+                indiceMenor = v;
+                //Guarda o elemento da lista a ser apagadp
+                apagar = i;
+            }
+        }
+        //Remove o menor da lista
+        Q.remove(apagar);
+           
+        return indiceMenor;
+    }
+              
+    /**
+     * Retorna a lista dos vértices getAdjacentes de u.
+     *
+     * Complexidade O(V log V)
+     *
+     * @param G Matriz de adjacência do grafo
+     * @param u Vértices a ser localiza os getAdjacentes
+     * @return O menor vértice
+     */
+    public static List getAdjacentes(int[][] G, int u) {
         int n = G.length;
         List vertices = new LinkedList();
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {                
+            for (int j = 0; j < n; j++) {
+                //Com pesos
                 if (G[i][j] != 0) {
-                    //Cria um vetor de 3 elementos para conter                     
-                    //[0]=u(origem), [1]=v(destino), [2]=w(peso)
-                    vertices.add(new int[]{i, j, G[i][j]});
+                    //Adiciona somente quando for de uma mesma origem
+                    if (i == u) {
+                        //Cria um vetor de 3 elementos para conter                     
+                        //[0]=v(destino), [1]=w(peso)
+                        vertices.add(new int[]{j, G[i][j]});
+
+                    }
                 }
             }
         }
         return vertices;
     }
-    
-    /**
-     * Retorna o índice do vértice com o menor peso da aresta ainda não visitado.
-     *
-     * Complexidade O(V log V)
-     * 
-     * @param n Quantidade de vértices a ser pesquisados
-     * @return O índice do menor vértice
-     */
-    public static int extrairMenor(int n) {
-        int menorValor = Integer.MAX_VALUE;
-        int indiceMenor = -1;
-        for (int i = 0; i < n; i++) {
-            if (cor[i] == BRANCO && d[i] < menorValor) {
-                indiceMenor = i;
-                menorValor = d[i];
-            }
-        }
-        return indiceMenor;
-    }    
 
     /**
      * Inicializa as estimativas de caminhos mínimos e predecessores.
@@ -123,96 +158,95 @@ public class Principal {
         cor = new int[V];
         for (int v = 0; v < G.length; v++) {
             d[v] = Integer.MAX_VALUE;
-            pi[v] = -1;
-            cor[v] = BRANCO;            
+            pi[v] = -1;            
         }
         d[s] = 0;
-        pi[s] = 0;               
+        pi[s] = 0;
     }
 
     /**
-     * Teste se pode ser melhorado o caminho mínimo de u até v.
+     * Testa se pode ser melhorado o caminho mínimo de u até v.
      *
      * @param u Vértice de origem.
      * @param v Vértice de destino
      * @param w Peso do caminho u até v.
      */
-    private static void relaxamento(int u, int v, int w) {        
+    private static void relaxamento(int u, int v, int w) {
         if (d[v] > d[u] + w) {
             d[v] = d[u] + w;
             pi[v] = u;
         }
     }
- 
+
     /**
      * Exibe o caminho a ser percorrido no Grafo e o custo
      *
      * @param S Lista a ser percorrido para mostrar o caminho e o custo
      */
-    public static void mostrarCaminho(int[] S) {
+    public static void mostrarCaminho(List S) {
         //Quantidade de vértices da lista
-        int n = S.length;        
+        int n = S.size();
         //Percorre os vértices a partir de S        
         System.out.println("Caminho mínimo :");
-        for (int v = 1; v < n; v++) {
-            System.out.println(trocar(pi[S[v]]) + " -> " + trocar(S[v]) + " custo: " + d[S[v]]);            
-        }        
+        for (int i = 1; i < n; i++) {
+            //Recupera o vértice
+            int v = (int) S.get(i);
+            System.out.println(trocar(pi[v]) + " -> " + trocar(v) + " custo: " + d[v]);
+        }
     }
     
     /**
      * Executa o algoritmo de Dijkstra para Caminhos Mínimos de fonte única.
      *
-     * Encontra a distância mais curta de s para todos os outros vértices.   
-     * 
+     * Encontra a distância mais curta de s para todos os outros vértices.
+     *
      * Complexidade: O(V log V + E)
      *
      * @param G Matriz de adjacência da árvore
      * @param s Vértice de início
-     * @return Vetor com a lista das arestas de menor custo
+     * @return Vetor com a lista dos vértices de menor custo
      */
-    public static int[] algoritmoDijkstra(int[][] G, int s) {
-
-        //Quantidade de vértices do grafo G
-        int V = G.length;
-
-        //Instância o vetor de retorno
-        int[] S = new int[V];
-        
-        //Converte a matriz em uma lista de arestas
-        List arestas = getMatrizVertices(G);
-
-        //Quantidade de arestas do grafo
-        int E = arestas.size();
+    public static List dijkstra(int[][] G, int s) {
 
         //Realiza a inicialização das estimativas
         inicializaFonteUnica(G, s);
 
-        //Percorre todos os vértice do grafo
-        for (int i = 0; i < V; i++) {
-            //extranctMin remove o vértice com a menor distância de Q
-            int x = extrairMenor(V);
-            //Marca como visitado
-            cor[x] = CINZA;
-            S[i]=x;                        
-            //Percorre todas as arestas do grafo
-            for (int j = 0; j < E; j++) {
-                int[] vertice = (int[]) arestas.get(j);
-                int u = vertice[0];
-                int v = vertice[1];
-                int w = vertice[2];
-                //Faz p relaxamento para o vertice retirado de V
-                if (u == x) {                
-                    relaxamento(u, v, w);
-                }
+        //Instância o conjunto de retorno                     
+        List S = new LinkedList();
+                
+        //Fila de prioridade mínima dos vértices
+        List Q = getVertices(G);
+        
+        //Até existir vértices em Q
+        while (Q.size() != 0) {
+
+            //extranctMin retorna e remove o vértice com a menor distância de Q
+            int u = extrairMenor(Q);
+            
+            //Adiciona o vértice do menor(x) a lista a saída
+            S.add(u);
+            
+            //Retorna a lista dos vértices adjacentes do menor(u)
+            List Adj = getAdjacentes(G, u);
+            
+            //Percorre os vértices adjacentes do menor(u)
+            for (int i = 0; i < Adj.size(); i++) {
+                //Recupera o vértice adjacente i de u para realizar o relaxamento
+                int[] vertice = (int[]) Adj.get(i);                
+                int v = vertice[0];
+                int w = vertice[1];
+                
+                //Faz o relaxamento para o vertice(u,v,w)                
+                relaxamento(u, v, w);
             }
-        }  
+        }
         return S;
     }
 
     public static void main(String args[]) {
 
 //       //Grafo Slide 143 de 20/10/2017
-         //descomente a linha 39 para usar este grafo
+        //descomente a linha a seguir para usar este grafo
 //       int G[][] =
 //               //s  r  w  t  u  v 
 //               {{0,10, 0, 0, 5, 0}, //s
@@ -221,30 +255,29 @@ public class Principal {
 //                {0, 0, 0, 0, 0, 0}, //t
 //                {0, 3, 9, 0, 0, 2}, //u
 //                {7, 0, 6, 5, 0, 0}}; //v
-               
-        
-        //Grafo da página xx Thomas H. Cormen 3 ed
-        //descomente a linha 38 para usar este grafo
+
+        //Grafo da página 659 Thomas H. Cormen 3 ed
+        //descomente a linha a seguir para usar este grafo
         int G[][]
-             = //s   t  x  y  z    
-               {{0, 10, 0, 5, 0}, //s
-                {0,  0, 1, 2, 0}, //t
-                {0,  0, 0, 0, 2}, //x
-                {0,  3, 9, 0, 2}, //y
-                {7,  0, 6, 0, 0}};//z
+                = //s   t  x  y  z    
+                {{0, 10, 0, 5, 0}, //s
+                {0, 0, 1, 2, 0}, //t
+                {0, 0, 0, 0, 2}, //x
+                {0, 3, 9, 0, 2}, //y
+                {7, 0, 6, 0, 0}};//z
 
         System.out.println(">>> Caminho mínimos de fonte única, Algoritmo de Dijkstra <<<");
 
         //Executa o algoritmo
         int s = destrocar('s');
-        int[] S = algoritmoDijkstra(G, s);
 
-        //Mostra o menor caminho
-        mostrarCaminho(S);  
+        List S = dijkstra(G, s);
         
+        mostrarCaminho(S);  
+
         System.out.println("\nMostrando todos dados:");
         for (int i = 0; i < G.length; i++) {
-            System.out.println(trocar(pi[i]) + " -> " +  trocar(i) + " custo: " + d[i]);
+            System.out.println(trocar(pi[i]) + " -> " + trocar(i) + " custo: " + d[i]);
         }
     }
 }
